@@ -67,8 +67,22 @@ router.get("/", async (req, res) => {
     const orders = await Order.find().sort({ updatedAt: -1 });
     const formattedOrders = [];
     const baseUrl = req.protocol + "://" + req.get("host");
+  // BOI by mahendra
+    const currentDate = new Date(); // Get the current date
+  //  EOI by mahendra
 
     orders.forEach((order) => {
+  // BOI by mahendra
+      // Convert order.date to a Date object
+      const orderDate = new Date(order.date);
+
+      // Calculate the difference in time (in milliseconds)
+      const timeDifference = currentDate - orderDate;
+
+      // Calculate age in days (you can also convert this to months or years if necessary)
+      const ageInDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Convert milliseconds to days
+  // EOI by mahendra
+
       formattedOrders.push({
         advance: order.advance,
         courierCharges: order.courierCharges,
@@ -91,6 +105,7 @@ router.get("/", async (req, res) => {
         status: order.status,
         updatedAt: order.updatedAt,
         _id: order._id,
+        age: ageInDays, 
       });
     });
     res.status(200).json(formattedOrders);
