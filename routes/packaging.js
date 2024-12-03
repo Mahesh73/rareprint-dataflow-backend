@@ -16,14 +16,7 @@ router.get('/packaging', async (req, res) => {
 
 // API to move a product from RISO to Packaging
 router.put("/production/moveToPackaging", async (req, res) => {
-  const { orderId, productId, quantity } = req.body;
-
-  // Validate input
-  if (!orderId || !productId || quantity === undefined) {
-    return res
-      .status(400)
-      .json({ message: "orderId, productId, and quantity are required." });
-  }
+  const { orderId, productId } = req.body;
 
   try {
     // Step 1: Find the product in RISO collection
@@ -57,7 +50,6 @@ router.put("/production/moveToPackaging", async (req, res) => {
       customerName: order.customerName,
       productName: product.productName,
       productCategory: product.category,
-      quantity: risoProduct.printedQty,
     });
     await newPackagingEntry.save();
 
@@ -68,9 +60,9 @@ router.put("/production/moveToPackaging", async (req, res) => {
     const updatedOrder = await Order.findOneAndUpdate(
       { _id: orderId, "product._id": productId }, // Find the order and specific product
       {
-        $set: { "order.$.status": "In Packaging" },
+        $set: { "order.$.status": "Dispatched" },
         $push: {
-          "product.$.status": { status: "Packaging", date: new Date() }, // Add to statusHistory
+          "product.$.status": { status: "Dispatched", date: new Date() }, // Add to statusHistory
         },
       },
       { new: true }

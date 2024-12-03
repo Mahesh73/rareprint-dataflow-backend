@@ -17,7 +17,6 @@ const packagingSchema = new mongoose.Schema(
     productName: { type: String, required: true },
     productCategory: { type: String, required: true },
     packagingStatus: { type: String, default: "In Packaging" },
-    quantity: { type: Number, required: true },
     packagingDate: { type: Date, default: Date.now },
     createdAt: { type: Date, default: Date.now },
   },
