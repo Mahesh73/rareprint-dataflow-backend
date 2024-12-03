@@ -70,7 +70,7 @@ const orderSchema = new Schema(
     product: [productSchema],
     salesExecutive: { type: String, required: true },
     paymentMethod: { type: String, required: true },
-    advance: Number,
+    advance: String,
     description: { type: String },
     designName: { type: String },
     leadSource: { type: String },
