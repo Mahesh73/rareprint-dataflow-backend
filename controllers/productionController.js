@@ -70,7 +70,7 @@ const addProductToProduction = async (req, res) => {
           quantity: product.quantity,
           size: product.size,
           prodQty,
-          design: product.design
+          design: product.design,
         });
         await risoProduction.save();
       } else if (selectMachine === "xerox") {
@@ -84,10 +84,12 @@ const addProductToProduction = async (req, res) => {
           size: product.size,
           paper: selectPaper,
           prodQty,
-          design: product.design
+          design: product.design,
         });
         await xeroxProduction.save();
       }
+      product.status.push({ status: "Printing", updatedAt: new Date() });
+      order.status = "In Progress";
     } else if (chooseType === "outsource") {
       const outsourceProduction = new OutSource({
         productId: product._id,
@@ -103,13 +105,12 @@ const addProductToProduction = async (req, res) => {
         dueDate,
         otherDetails,
       });
+      product.status.push({ status: "Printing", updatedAt: new Date() });
+      order.status = "Sent to Vendor";
       await outsourceProduction.save();
     }
 
-    product.status.push({ status: "Printing", updatedAt: new Date() });
-    order.status = "In Progress";
     await order.save();
-
     return res
       .status(201)
       .json({ message: "Production details added successfully", product });

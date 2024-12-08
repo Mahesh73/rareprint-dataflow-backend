@@ -5,8 +5,6 @@ const {
   addProductToProduction,
   getProductionDetails,
   updateProductionMachinePrint,
-} = require("../controllers/productionController");
-const {
   deleteProductFromOrder,
 } = require("../controllers/productionController");
 
