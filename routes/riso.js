@@ -26,9 +26,6 @@ router.get("/riso", async (req, res) => {
         select: "customerName invoiceNo",
       })
       .sort({ createdAt: -1 });
-    if (risoProduction.length === 0) {
-      return res.status(404).json({ message: "No RISO production data found" });
-    }
     return res.status(200).json(risoProduction);
   } catch (error) {
     return res.status(500).json({

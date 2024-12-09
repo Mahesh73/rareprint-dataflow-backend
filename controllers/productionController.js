@@ -71,6 +71,7 @@ const addProductToProduction = async (req, res) => {
           size: product.size,
           prodQty,
           design: product.design,
+          afterPrint,
         });
         await risoProduction.save();
       } else if (selectMachine === "xerox") {
@@ -85,6 +86,7 @@ const addProductToProduction = async (req, res) => {
           paper: selectPaper,
           prodQty,
           design: product.design,
+          afterPrint,
         });
         await xeroxProduction.save();
       }
@@ -172,13 +174,21 @@ const updateProductForProduction = async (req, res) => {
     if (selectMachine === "riso") {
       updatedEntry = await Riso.findOneAndUpdate(
         { orderId, productId }, // Find the matching document
-        { $set: { paper: selectPaper, envelopSize, prodQty } }, // Update the printedQuantity
+        {
+          $set: {
+            paper: selectPaper,
+            envelopSize,
+            prodQty,
+            dueDate,
+            afterPrint,
+          },
+        }, // Update the printedQuantity
         { new: true, runValidators: true } // Return the updated document
       );
     } else if (selectMachine === "xerox") {
       updatedEntry = await Xerox.findOneAndUpdate(
         { orderId, productId },
-        { $set: { paper: selectPaper, prodQty, afterPrint } },
+        { $set: { paper: selectPaper, prodQty, dueDate, afterPrint } },
         { new: true, runValidators: true }
       );
     }
