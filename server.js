@@ -7,7 +7,7 @@ const packagingRoutes = require("./routes/packaging");
 const risoRoutes = require("./routes/riso");
 const xeroxRoutes = require("./routes/xerox");
 const toyocutRoutes = require("./routes/toyocut");
-
+const outsourceRoutes = require("./routes/outsource");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -34,3 +34,4 @@ app.use("/api", packagingRoutes);
 app.use("/api", risoRoutes);
 app.use("/api/xerox", xeroxRoutes);
 app.use("/api/toyocut", toyocutRoutes);
+app.use("/api/outsource", outsourceRoutes);
