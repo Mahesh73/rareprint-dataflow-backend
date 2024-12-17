@@ -4,6 +4,7 @@ const cors = require("cors");
 const ordersRoutes = require("./routes/orders");
 const productionRoutes = require("./routes/productionRoutes");
 const packagingRoutes = require("./routes/packaging");
+const bindingRoutes = require("./routes/binding");
 const risoRoutes = require("./routes/riso");
 const xeroxRoutes = require("./routes/xerox");
 const toyocutRoutes = require("./routes/toyocut");
@@ -31,6 +32,7 @@ app.listen(PORT, () => {
 app.use("/api/orders", ordersRoutes);
 app.use("/api", productionRoutes);
 app.use("/api", packagingRoutes);
+app.use("/api", bindingRoutes);
 app.use("/api", risoRoutes);
 app.use("/api/xerox", xeroxRoutes);
 app.use("/api/toyocut", toyocutRoutes);
