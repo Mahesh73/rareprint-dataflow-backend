@@ -26,11 +26,12 @@ router.post("/", upload, async (req, res) => {
       return res.status(400).json({ message: "Invoice number already exists" });
     }
 
-    const newProduct = req.body.product.map((item) => {
+    const newProduct = req.body.product.map((item, i) => {
+      console.log(item);
       return {
         ...item,
         design:
-          req.files && req.files.length > 0 ? req.files[0]?.filename : null,
+          req.files && req.files.length > 0 ? req.files[i]?.filename : null,
         status: [{ status: "Created", updatedAt: new Date() }],
       };
     });
@@ -81,8 +82,6 @@ router.get("/", async (req, res) => {
 
       // Calculate age in days (you can also convert this to months or years if necessary)
       const ageInDays = Math.floor(timeDifference / (1000 * 3600 * 24)); // Convert milliseconds to days
-  // EOI by mahendra
-
       formattedOrders.push({
         advance: order.advance,
         courierCharges: order.courierCharges,
