@@ -107,8 +107,8 @@ const addProductToProduction = async (req, res) => {
         dueDate,
         otherDetails,
       });
-      product.status.push({ status: "Printing", updatedAt: new Date() });
-      order.status = "Sent to Vendor";
+      product.status.push({ status: "Outsource", updatedAt: new Date() });
+      order.status = "Sent to Outsource";
       await outsourceProduction.save();
     }
 

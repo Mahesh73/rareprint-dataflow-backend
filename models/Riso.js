@@ -20,6 +20,7 @@ const risoSchema = new mongoose.Schema(
     updatedAt: { type: Date, default: Date.now },
     prodQty: Number,
     design: String,
+    afterPrint:String,
   },
   { timestamps: true }
 );
