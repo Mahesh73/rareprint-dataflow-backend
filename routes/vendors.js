@@ -5,7 +5,7 @@ const Vendor = require('../models/Vendor');
 // Vendor registration API
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, contactNumber, address } = req.body;
+    const { name, email, contactNumber, city, address } = req.body;
 
     // Validate input
     if (!name || !email || !contactNumber || !address) {
@@ -23,6 +23,7 @@ router.post('/register', async (req, res) => {
       name,
       email,
       contactNumber,
+      city,
       address,
     });
 
@@ -39,7 +40,7 @@ router.post('/register', async (req, res) => {
 router.put('/update/:vendorId', async (req, res) => {
     try {
       const { vendorId } = req.params;
-      const { name, email, contactNumber, address } = req.body;
+      const { name, email, contactNumber, city, address } = req.body;
   
       // Validate input
       if (!name || !email || !contactNumber || !address) {
@@ -49,7 +50,7 @@ router.put('/update/:vendorId', async (req, res) => {
       // Find and update the vendor
       const updatedVendor = await Vendor.findByIdAndUpdate(
         vendorId,
-        { name, email, contactNumber, address },
+        { name, email, contactNumber, city, address },
         { new: true, runValidators: true } // Return the updated document
       );
   

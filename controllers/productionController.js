@@ -171,24 +171,40 @@ const updateProductForProduction = async (req, res) => {
     };
 
     let updatedEntry;
-    if (selectMachine === "riso") {
-      updatedEntry = await Riso.findOneAndUpdate(
-        { orderId, productId }, // Find the matching document
+    if (chooseType === "inHouse") {
+      if (selectMachine === "riso") {
+        updatedEntry = await Riso.findOneAndUpdate(
+          { orderId, productId }, // Find the matching document
+          {
+            $set: {
+              paper: selectPaper,
+              envelopSize,
+              prodQty,
+              dueDate,
+              afterPrint,
+            },
+          }, // Update the printedQuantity
+          { new: true, runValidators: true } // Return the updated document
+        );
+      } else if (selectMachine === "xerox") {
+        updatedEntry = await Xerox.findOneAndUpdate(
+          { orderId, productId },
+          { $set: { paper: selectPaper, prodQty, dueDate, afterPrint } },
+          { new: true, runValidators: true }
+        );
+      }
+    } else if (chooseType === "outsource") {
+      updatedEntry = await OutSource.findOneAndUpdate(
+        { orderId, productId },
         {
           $set: {
-            paper: selectPaper,
-            envelopSize,
-            prodQty,
+            vendorName: selectVendor,
+            cost,
+            extraCharges,
             dueDate,
-            afterPrint,
+            otherDetails,
           },
-        }, // Update the printedQuantity
-        { new: true, runValidators: true } // Return the updated document
-      );
-    } else if (selectMachine === "xerox") {
-      updatedEntry = await Xerox.findOneAndUpdate(
-        { orderId, productId },
-        { $set: { paper: selectPaper, prodQty, dueDate, afterPrint } },
+        },
         { new: true, runValidators: true }
       );
     }

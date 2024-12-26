@@ -33,6 +33,7 @@ const statusSchema = new Schema(
         "Packaging",
         "Dispatched",
         "Delivered",
+        "Outsource"
       ],
       required: true,
     },
